@@ -1,27 +1,33 @@
+"""
+Get weather by zipcode using Airnow website API
+"""
 import tkinter.ttk as ttk
 from tkinter import *
-from PIL import ImageTk, Image
+
 import requests
 import json
 
-# First widget: global window
+# Global window settings
 root = Tk()
 root.title("Title")
-root.iconbitmap("icon2.ico")
+root.iconbitmap("../images/icon2.ico")
 style = ttk.Style()
 style.theme_use('clam')
-root.geometry("600x100")
+root.geometry("400x50")
 
-myLabel = Label(root, text="")
-myLabel.grid(row=1, column=0, columnspan=2)
+#
+weather_label = Label(root, text="")
 
-# https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=89129&distance=5&API_KEY=937E7911-4A52-4E84-8E32-4D1AAA95A07F
 
 def ziplookup():
+    """
+    when button is pressed, get weather from API for filled zipcode
+    """
+    global weather_label
+
     api_request = requests.get(
         "https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=" + zip.get() + "&distance=5&API_KEY=937E7911-4A52-4E84-8E32-4D1AAA95A07F"
     )
-
     try:
         api = json.loads(api_request.content)
         city = api[0]["ReportingArea"]
@@ -41,21 +47,22 @@ def ziplookup():
         elif category == "Hazardous":
             weather_color = "##660000"
 
-        global myLabel
-        myLabel.grid_forget()
-        myLabel = Label(root, text=city + " Air Quality: " + str(quality) + " (" + category + ")",
-                        font="Helvetica", background=weather_color)
-        myLabel.grid(row=1, column=0, columnspan=2)
-
+        # display weather with related color
+        weather_label.grid_forget()
+        weather_label = Label(root, text=city + " Air Quality: " + str(quality) + " (" + category + ")",
+                              font="Helvetica", background=weather_color)
+        weather_label.grid(row=1, column=0, columnspan=2)
         root.configure(background=weather_color)
 
     except Exception as e:
         api = "Error..."
 
 
+# Zipcode entry
 zip = Entry(root)
 zip.grid(row=0, column=0, stick=W + E + N + S)
 
+# Submit button
 zipButton = Button(root, text="Lookup Zipcode", command=ziplookup)
 zipButton.grid(row=0, column=1, stick=W + E + N + S)
 

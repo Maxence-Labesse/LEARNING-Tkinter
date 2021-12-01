@@ -7,7 +7,7 @@ from tkinter import *
 # Global window settings
 root = Tk()
 root.title("Title")
-root.iconbitmap("icon2.ico")
+root.iconbitmap("../images/icon2.ico")
 style = ttk.Style()
 style.theme_use('clam')
 

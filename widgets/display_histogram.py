@@ -6,6 +6,8 @@ from tkinter import *
 import numpy as np
 import matplotlib.pyplot as plt
 
+data = np.random.normal(200000, 25000, 5000)
+
 # Global window settings
 root = Tk()
 root.title("Title")
@@ -14,17 +16,15 @@ style = ttk.Style()
 style.theme_use('clam')
 
 
-
 def graph():
     """
-
-    :return:
+    when "Graph it!" button is pressed, displays histogram
     """
-    house_prices = np.random.normal(200000, 25000, 5000)
-    plt.hist(house_prices, 200)
+    plt.hist(data, 200)
     plt.show()
 
 
+# Button to display graph
 my_button = Button(root, text="Graph it!", command=graph)
 my_button.pack()
 

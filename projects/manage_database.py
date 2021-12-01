@@ -6,7 +6,7 @@ import sqlite3
 # First widget: global window
 root = Tk()
 root.title("Title")
-root.iconbitmap("icon2.ico")
+root.iconbitmap("../images/icon2.ico")
 style = ttk.Style()
 style.theme_use('clam')
 
@@ -69,7 +69,6 @@ def edit():
     global editor
     editor = Tk()
     editor.title("Update a record")
-    editor.iconbitmap("icon2.ico")
 
     # Crate a database or connect to one
     conn = sqlite3.connect("address_book.db")

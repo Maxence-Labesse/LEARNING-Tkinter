@@ -1,18 +1,23 @@
+"""
+Display message box:
+showinfo, showwarning, showerror, askquestion, asqkokcancel, askyesno
+"""
 import tkinter.ttk as ttk
 from tkinter import *
 from tkinter import messagebox
 
-# First widget: global window
+# Global window settings
 root = Tk()
 root.title("Title")
-root.iconbitmap("icon2.ico")
+root.iconbitmap("../images/icon2.ico")
 style = ttk.Style()
 style.theme_use('clam')
 
 
-# showinfo, showwarning, showerror, askquestion, asqkokcancel, askyesno
-
 def popup():
+    """
+    display different types of messageboxes
+    """
     messagebox.showinfo(title="This is my popup", message="Hello world!")
     messagebox.showwarning(title="This is my popup", message="Hello world!")
     messagebox.showerror(title="This is my popup", message="Hello world!")
@@ -33,6 +38,7 @@ def popup():
     Label(root, text=txt).pack()
 
 
+# button to display messageboxes
 ttk.Button(root, text="Popup", command=popup).pack()
 
 # Loop for dynamic screen
