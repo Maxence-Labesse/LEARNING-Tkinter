@@ -22,8 +22,13 @@ def show():
     myLabel.pack()
 
 
-c = Checkbutton(root, text="Check this box", variable=var, command=show)
+var = StringVar()
+
+c = Checkbutton(root, text="Check this box", variable=var, onvalue="On", offvalue="Off")
 c.pack()
+
+myButton = Button(root, text="Show Selection", command=show)
+myButton.pack()
 
 # Loop for dynamic screen
 root.mainloop()

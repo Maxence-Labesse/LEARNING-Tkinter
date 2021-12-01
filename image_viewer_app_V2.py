@@ -27,7 +27,7 @@ def forward(image_number):
     global status
 
     my_label.grid_forget()
-    my_label = ttk.Label(image=image_list[image_number - 1])
+    my_label = ttk.Label(image=image_list[image_number])
     button_forward = ttk.Button(root, text=">>", command=lambda: forward(image_number + 1))
     button_back = ttk.Button(root, text="<<", command=lambda: back(image_number - 1))
 
@@ -49,7 +49,7 @@ def back(image_number):
     global status
 
     my_label.grid_forget()
-    my_label = ttk.Label(image=image_list[image_number - 1])
+    my_label = ttk.Label(image=image_list[image_number])
     button_forward = ttk.Button(root, text=">>", command=lambda: forward(image_number + 1))
     button_back = ttk.Button(root, text="<<", command=lambda: back(image_number - 1))
 
@@ -66,7 +66,7 @@ def back(image_number):
 
 button_back = ttk.Button(root, text="<<", command=lambda: back, state=DISABLED)
 button_exit = ttk.Button(root, text="Exit program", command=root.quit)
-button_forward = ttk.Button(root, text=">>", command=lambda: forward(2))
+button_forward = ttk.Button(root, text=">>", command=lambda: forward(1))
 
 button_back.grid(row=1, column=0)
 button_exit.grid(row=1, column=1)
