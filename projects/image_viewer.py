@@ -1,9 +1,67 @@
-"""
-image viewer
+"""image viewer
+
 """
 from tkinter import *
 import tkinter.ttk as ttk
 from PIL import ImageTk, Image
+
+
+def update_status(img_nb):
+    """
+    update status label according to image number
+    """
+    status = ttk.Label(root, text="Image " + str(img_nb) + " of " + str(len(image_list)),
+                       relief=SUNKEN, anchor=E)
+    return status
+
+
+def change_image(direction):
+    global current_image_id
+    global displayed_image
+    global forward_button
+    global backward_button
+    global status_bar
+
+    # according to direction, select new image and buttons state
+    if direction == 'next':
+        current_image_id += 1
+
+        if current_image_id == len(image_list):
+            forward_button_state = DISABLED
+        else:
+            forward_button_state = NORMAL
+
+        backward_button_state = NORMAL
+
+    if direction == 'back':
+        current_image_id -= 1
+
+        if current_image_id == 1:
+            backward_button_state = DISABLED
+        else:
+            backward_button_state = NORMAL
+
+        forward_button_state = NORMAL
+
+    # display new image
+    displayed_image.grid_forget()
+    displayed_image = Label(image=image_list[current_image_id - 1])  # because list index starts at 0
+    displayed_image.grid(row=0, column=0, columnspan=3)
+
+    # update forward and backward buttons
+    forward_button.grid_forget()
+    forward_button = ttk.Button(root, text=">>", command=lambda: change_image('next'),
+                                state=forward_button_state)
+    forward_button.grid(row=1, column=2, pady=10)
+    backward_button.grid_forget()
+    backward_button = ttk.Button(root, text="<<", command=lambda: change_image('back'),
+                                 state=backward_button_state)
+    backward_button.grid(row=1, column=0)
+
+    # update status bar
+    status_bar = update_status(current_image_id)
+    status_bar.grid(row=2, column=0, columnspan=3, sticky=W + E)
+
 
 # Global window settings
 root = Tk()
@@ -12,144 +70,31 @@ root.iconbitmap("../images/icon2.ico")
 style = ttk.Style()
 style.theme_use('clam')
 
-# images to dispay
+# images
 my_img1 = ImageTk.PhotoImage((Image.open("../images/image1.png")).resize((400, 400), Image.ANTIALIAS))
 my_img2 = ImageTk.PhotoImage((Image.open("../images/image2.png")).resize((400, 400), Image.ANTIALIAS))
 my_img3 = ImageTk.PhotoImage((Image.open("../images/image3.png")).resize((400, 400), Image.ANTIALIAS))
 image_list = [my_img1, my_img2, my_img3]
 
-current_image_nb = 1
-
-
-def update_status(img_nb):
-    """
-    update status label according to image number
-    """
-    status = ttk.Label(root, text="Image " + str(img_nb) + " of " + str(len(image_list)), relief=SUNKEN, anchor=E)
-    return status
-
-
-def forward():
-    global current_image_nb
-    global my_label
-    global button_forward
-    global button_back
-    global status
-
-    # next image number
-    current_image_nb += 1
-
-    # disable forward button if last image
-    if current_image_nb == len(image_list):
-        forward_button_state = DISABLED
-    else:
-        forward_button_state = NORMAL
-
-    # update widgets
-    # display image
-    my_label.grid_forget()
-    my_label = Label(image=image_list[current_image_nb - 1])  # because list index starts at 0
-    my_label.grid(row=0, column=0, columnspan=3)
-    button_forward.grid_forget()
-    button_forward = ttk.Button(root, text=">>", command=forward, state=forward_button_state)
-    button_forward.grid(row=1, column=2, pady=10)
-    button_back.grid_forget()
-    button_back = ttk.Button(root, text="<<", command=back)
-    button_back.grid(row=1, column=0)
-    status = update_status(current_image_nb)
-    status.grid(row=2, column=0, columnspan=3, sticky=W + E)
-
-
-def back():
-    global current_image_nb
-    global my_label
-    global button_forward
-    global button_back
-    global status
-
-    # next image number
-    current_image_nb -= 1
-
-    # disable forward button if last image
-    if current_image_nb == 1:
-        back_button_state = DISABLED
-    else:
-        back_button_state = NORMAL
-
-    # update widgets
-    # display image
-    my_label.grid_forget()
-    my_label = Label(image=image_list[current_image_nb - 1])  # because list index starts at 0
-    my_label.grid(row=0, column=0, columnspan=3)
-    # button forward
-    button_forward = ttk.Button(root, text=">>", command=forward)
-    button_forward.grid(row=1, column=2, pady=10)
-    # button back
-    button_back = ttk.Button(root, text="<<", command=back, state=back_button_state)
-    button_back.grid(row=1, column=0)
-    # status bar
-    status = update_status(current_image_nb)
-    status.grid(row=2, column=0, columnspan=3, sticky=W + E)
-
+# init image id
+current_image_id = 1
 
 # display image
-my_label = Label(image=my_img1)
-my_label.grid(row=0, column=0, columnspan=3)
+displayed_image = Label(image=my_img1)
+displayed_image.grid(row=0, column=0, columnspan=3)
+
 # forward and back buttons
-button_back = ttk.Button(root, text="<<", command=back, state=DISABLED)
-button_back.grid(row=1, column=0)
-button_forward = ttk.Button(root, text=">>", command=forward)
-button_forward.grid(row=1, column=2, pady=10)
+backward_button = ttk.Button(root, text="<<", command=lambda: change_image('back'), state=DISABLED)
+backward_button.grid(row=1, column=0)
+forward_button = ttk.Button(root, text=">>", command=lambda: change_image('next'))
+forward_button.grid(row=1, column=2, pady=10)
+
 # exit button
-button_exit = ttk.Button(root, text="Exit program", command=root.quit)
-button_exit.grid(row=1, column=1)
+exit_button = ttk.Button(root, text="Exit program", command=root.quit)
+exit_button.grid(row=1, column=1)
+
 # status bar
-status = update_status(current_image_nb)
-status.grid(row=2, column=0, columnspan=3, sticky=W + E)
-
-"""
-def forward(image_number):
-    global my_label
-    global button_forward
-    global button_back
-    global status
-
-    my_label.grid_forget()
-    my_label = ttk.Label(image=image_list[image_number])
-    button_forward = ttk.Button(root, text=">>", command=lambda: forward(image_number + 1))
-    button_back = ttk.Button(root, text="<<", command=lambda: back(image_number - 1))
-
-    if image_number == len(image_list):
-        button_forward = ttk.Button(root, text=">>", state=DISABLED)
-
-    my_label.grid(row=0, column=0, columnspan=3)
-    button_back.grid(row=1, column=0)
-    button_forward.grid(row=1, column=2)
-
-    status = ttk.Label(root, text="Image " + str(image_number) + " of " + str(len(image_list)), relief=SUNKEN, anchor=E)
-    status.grid(row=2, column=0, columnspan=3, sticky=W + E)
-
-
-def back(image_number):
-    global my_label
-    global button_forward
-    global button_back
-    global status
-
-    my_label.grid_forget()
-    my_label = ttk.Label(image=image_list[image_number])
-    button_forward = ttk.Button(root, text=">>", command=lambda: forward(image_number + 1))
-    button_back = ttk.Button(root, text="<<", command=lambda: back(image_number - 1))
-
-    if image_number == 1:
-        button_back = ttk.Button(root, text="<<", state=DISABLED)
-
-    my_label.grid(row=0, column=0, columnspan=3)
-    button_back.grid(row=1, column=0)
-    button_forward.grid(row=1, column=2)
-
-    status = ttk.Label(root, text="Image " + str(image_number) + " of " + str(len(image_list)), relief=SUNKEN, anchor=E)
-    status.grid(row=2, column=0, columnspan=3, sticky=W + E)
-"""
+status_bar = update_status(current_image_id)
+status_bar.grid(row=2, column=0, columnspan=3, sticky=W + E)
 
 root.mainloop()

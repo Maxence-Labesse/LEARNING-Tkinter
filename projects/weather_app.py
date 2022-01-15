@@ -1,5 +1,5 @@
-"""
-Get weather by zipcode using Airnow website API
+"""get weather by zipcode using Airnow website API
+
 """
 import tkinter.ttk as ttk
 from tkinter import *
@@ -7,24 +7,14 @@ from tkinter import *
 import requests
 import json
 
-# Global window settings
-root = Tk()
-root.title("Title")
-root.iconbitmap("../images/icon2.ico")
-style = ttk.Style()
-style.theme_use('clam')
-root.geometry("400x50")
-
-#
-weather_label = Label(root, text="")
-
 
 def ziplookup():
-    """
-    when button is pressed, get weather from API for filled zipcode
+    """get weather from API for filled zipcode
+
     """
     global weather_label
 
+    # connect to Airnow API
     api_request = requests.get(
         "https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=" + zip.get() + "&distance=5&API_KEY=937E7911-4A52-4E84-8E32-4D1AAA95A07F"
     )
@@ -34,6 +24,7 @@ def ziplookup():
         quality = api[0]["AQI"]
         category = api[0]["Category"]["Name"]
 
+        # get weather quality category
         if category == "Good":
             weather_color = "#0C0"
         elif category == "Moderate":
@@ -58,8 +49,20 @@ def ziplookup():
         api = "Error..."
 
 
+# Global window settings
+root = Tk()
+root.title("Title")
+root.iconbitmap("../images/icon2.ico")
+style = ttk.Style()
+style.theme_use('clam')
+root.geometry("400x50")
+
+#
+weather_label = Label(root, text="")
+
 # Zipcode entry
 zip = Entry(root)
+zip.insert(END, '90210')
 zip.grid(row=0, column=0, stick=W + E + N + S)
 
 # Submit button

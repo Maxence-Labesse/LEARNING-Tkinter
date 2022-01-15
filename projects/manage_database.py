@@ -1,23 +1,16 @@
+""" SQlite3 Database management app
+"""
 import tkinter.ttk as ttk
 from tkinter import *
-from PIL import ImageTk, Image
 import sqlite3
 
-# First widget: global window
-root = Tk()
-root.title("Title")
-root.iconbitmap("../images/icon2.ico")
-style = ttk.Style()
-style.theme_use('clam')
-
-# Databases
-# Crate a database or connect to one
+'''
+# Create a database or connect to one
 conn = sqlite3.connect("address_book.db")
 # Create cursor
 c = conn.cursor()
 
-# Create table
-'''
+# create table
 c.execute("""CREATE TABLE addresses (
         first_name text,
         last_name text,
@@ -26,10 +19,20 @@ c.execute("""CREATE TABLE addresses (
         state text,
         zipcode integer)
         """)
+        
+        
+# Commit changes
+conn.commit()
+
+# Close connection
+conn.close()
 '''
 
 
 def save_update():
+    """Save record update
+
+    """
     # Crate a database or connect to one
     conn = sqlite3.connect("address_book.db")
     # Create cursor
@@ -64,8 +67,10 @@ def save_update():
     editor.destroy()
 
 
-# Create function to update a record
 def edit():
+    """edit a record
+
+    """
     global editor
     editor = Tk()
     editor.title("Update a record")
@@ -134,8 +139,10 @@ def edit():
     conn.close()
 
 
-# Create function to delete a record
 def delete():
+    """delete a record
+
+    """
     # Crate a database or connect to one
     conn = sqlite3.connect("address_book.db")
     # Create cursor
@@ -150,8 +157,10 @@ def delete():
     conn.close()
 
 
-# Create Submit Function for database
-def submit():
+def create_record():
+    """create a new record in database
+
+    """
     # Crate a database or connect to one
     conn = sqlite3.connect("address_book.db")
     # Create cursor
@@ -184,6 +193,9 @@ def submit():
 
 
 def query():
+    """select and display a record
+
+    """
     # Crate a database or connect to one
     conn = sqlite3.connect("address_book.db")
     # Create cursor
@@ -193,8 +205,8 @@ def query():
     c.execute("SELECT *, oid from addresses")
     records = c.fetchall()  # / fetchmany(50) / fetchone()
 
+    # build string containing record informations
     print_record = ""
-
     for record in records:
         print_record += str(record[0]) + " " + str(record[1]) + "\t" + str(record[6]) + "\n"
 
@@ -206,6 +218,13 @@ def query():
     # Close connection
     conn.close()
 
+
+# First widget: global window
+root = Tk()
+root.title("Title")
+root.iconbitmap("../images/icon2.ico")
+style = ttk.Style()
+style.theme_use('clam')
 
 # Text boxes
 f_name = Entry(root, width=30)
@@ -240,8 +259,8 @@ delete_box_label = Label(root, text="Select ID", anchor="e")
 delete_box_label.grid(row=9, column=0, padx=(100, 0))
 
 # Create Submit Button
-Submit_btn = Button(root, text="Add Record to database", command=submit)
-Submit_btn.grid(row=6, column=0, columnspan=2, pady=10, padx=10, ipadx=108)
+create_record_btn = Button(root, text="Add Record to database", command=create_record)
+create_record_btn.grid(row=6, column=0, columnspan=2, pady=10, padx=10, ipadx=108)
 
 # Create a Query Button
 querry_btn = Button(root, text="Show records", command=query)
@@ -254,12 +273,6 @@ delete_btn.grid(row=10, column=0, columnspan=2, padx=10, pady=10, ipadx=135)
 # Create Delete button
 edit_btn = Button(root, text="Edit record", command=edit)
 edit_btn.grid(row=11, column=0, columnspan=2, padx=10, pady=10, ipadx=140)
-
-# Commit changes
-conn.commit()
-
-# Close connection
-conn.close()
 
 # Loop for dynamic screen
 root.mainloop()
