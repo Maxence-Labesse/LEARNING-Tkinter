@@ -8,25 +8,25 @@ the installation of the Tkinter module separately as it comes with Python alread
 ## Sources
 
 ### Official documentation
-[https://docs.python.org/fr/3/library/tkinter.html](official documentation)
+[https://docs.python.org/fr/3/library/tkinter.html](https://docs.python.org/fr/3/library/tkinter.html)
 
 ### Course
-[https://www.youtube.com/watch?v=YXPyB4XeYLA&t=1s](course)
+[https://www.youtube.com/watch?v=YXPyB4XeYLA&t=1s](https://www.youtube.com/watch?v=YXPyB4XeYLA&t=1s)
  
 ### Widgets list and options
-* widgets: [https://coderslegacy.com/python/list-of-tkinter-widgets/]()
-* options; [https://www.educba.com/python-tkinter/]()
+* widgets: [https://coderslegacy.com/python/list-of-tkinter-widgets/](https://coderslegacy.com/python/list-of-tkinter-widgets/)
+* options; [https://www.educba.com/python-tkinter/]([https://www.educba.com/python-tkinter/)
 
 ### Positioning
-* Presentation: [http://tkinter.fdex.eu/doc/gp.html]() 
-* Examples: [https://riptutorial.com/tkinter/example/29713/grid--]()
-* Some good advice: [https://stackoverflow.com/questions/16315732/how-do-you-set-the-position-of-a-grid-using-tkinter]()  
+* Presentation: [http://tkinter.fdex.eu/doc/gp.html](http://tkinter.fdex.eu/doc/gp.html) 
+* Examples: [https://riptutorial.com/tkinter/example/29713/grid--](https://riptutorial.com/tkinter/example/29713/grid--)
+* Some good advice: [https://stackoverflow.com/questions/16315732/how-do-you-set-the-position-of-a-grid-using-tkinter](https://stackoverflow.com/questions/16315732/how-do-you-set-the-position-of-a-grid-using-tkinter)  
 
 ### Utils
-Cheat Sheet: [https://cdn.activestate.com/wp-content/uploads/2021/02/Tkinter-CheatSheet.pdf]()
+Cheat Sheet: [https://cdn.activestate.com/wp-content/uploads/2021/02/Tkinter-CheatSheet.pdf](https://cdn.activestate.com/wp-content/uploads/2021/02/Tkinter-CheatSheet.pdf)
 
 ## Meta
 
 LABESSE Maxence - maxence.labesse@yahoo.fr
 
-[https://github.com/Maxence-Labesse/LEARNING-Tkinter]()
+[https://github.com/Maxence-Labesse/LEARNING-Tkinter](https://github.com/Maxence-Labesse/LEARNING-Tkinter)
